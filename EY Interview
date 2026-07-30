@@ -1,0 +1,173 @@
+EY 
+
+	1. Salesforce connector - scenario based 
+	-> Sobject for parent and child insertion at the same time
+	Parent flow 
+		○ Inserts Parent object using Salesforce connector
+		○ Retrieves Parent Record Id
+	Calls Child flow 
+		○ Passes Parent Id
+	Child flow 
+		○ Inserts Child object using that Parent Id
+This feels “simultaneous” from business logic, but is technically sequential, which Salesforce requires.
+
+
+	2. Munit for parallel for each , scatter gather and batch processing ?
+		----- 
+		In parallel for each, MUnit assertions should validate execution count and outcomes, not payload order. Mock internal processors and verify execution count rather than order.”
+		Scatter‑gather returns a collection of responses; MUnit tests should assert response presence, not route execution order. Mock each route and assert aggregated responses without relying on index order.”
+		Batch runs synchronously in Munit. No need for Thread.sleep. Always assert step execution count. 
+Use poll mechanism(Wait meachanism) wait until batch job completes rather than sleep. (analogy - order food - checking again if order receives rather than sleeping for 30 min)
+		Input list size = 5 , Logger should be called 5 times.  Validate batch step execution using verify‑call and record count.”
+		
+		
+		
+	3. Transaction managemnt  - XA ?
+	
+	4. Salesofrce accepts java object not json 
+	
+	5. Databae connector  
+	-> one database succeed and two different database are paralley excuting and out of them one got fail ,,we need to rollback the first succeed database txn as well . How do we achieve that? 
+	-> local or XA setup? - XA setup and which supports single threaded execution.
+->  And where we generally do this ?- at flow level only using transaction actions - alwys begin or begin or join
+	
+	6. Cloudhub 1.0 and 2.0 setup and RTF , used it?
+	
+	7. Any pipeline scripts for deploying the code on server , anythig like that?
+	
+	8. Migration - vulnerability and depenendcies and support will end. And how to find vulnerabilites for the code. - (in local we can add one depency cse to pom to generate a report for vulnerabitiy) that not only for migration but for day to day scan also if any vulnerability arisies. -> xray scan report while doing build pipelines
+	9. Which architecture you have followed in both the domain - api led architecture and event driven 
+	10. Dataweaves questions- 
+		a. [0, "Namrata", true, {"":""}, ["Array"]]
+		
+		-------------(2nd question : one change needed - "data" : "Array",
+							   "type": "Array" )
+		
+		[
+		  {
+		    "data": 0,
+		    "type": "Number"
+		  },
+		  {
+		    "data": "Namrata",
+		    "type": "String"
+		  },
+		  {
+		    "data": true,
+		    "type": "Boolean"
+		  },
+		  {
+		    "data": {
+		      "": ""
+		    },
+		    "type": "Object"
+		  },
+		  {
+		    "data": [
+		      "Array"
+		    ],
+		    "type": "Array"
+		  }
+		]
+		
+		----dwl--
+		
+		%dw 2.0
+		output application/json
+		---
+		payload map {
+		    "data" : if ($ is Array) "Array" else $,
+		    "type" : typeOf($)
+		}
+		===============================================
+		
+		b. 
+		
+		<?xml version='1.0' encoding='UTF-8'?>
+		 
+		<employess>
+		 
+		  <employe>
+		 
+		    <id>1</id>
+		 
+		    <name>Max</name>
+		 
+		    <dept>Hr</dept>
+		 
+		  </employe>
+		 
+		  <employe>
+		 
+		    <id>3</id>
+		 
+		    <name>Mule</name>
+		 
+		    <dept>Hr</dept>
+		 
+		  </employe>
+		 
+		    <employe>
+		 
+		    <id>2</id>
+		 
+		    <name>Alex</name>
+		 
+		    <dept>Admin</dept>
+		 
+		  </employe>
+		 
+		</employess>
+		
+		----
+		{
+		  "employess": {
+		    "employe": {
+		      "id": "1",
+		      "name": "Max",
+		      "dept": "Hr"
+		    },
+		    "employe": {
+		      "id": "3",
+		      "name": "Mule",
+		      "dept": "Hr"
+		    }
+		  }
+		}
+		
+		---- dwl ---
+		
+		%dw 2.0
+		output application/json
+		---
+		{
+		  employess:
+		    payload.employess.*employe
+		      filter ($.dept == "Hr")
+		      map {
+		        employe: {
+		          id: $.id,
+		          name: $.name,
+		          dept: $.dept
+		        }
+		      }
+		      reduce ((item, acc = {}) -> acc ++ item)
+		}
+		
+
+OR 
+
+
+%dw 2.0
+output application/json
+---
+  payload.employess.*employe filter($.dept == "Hr")
+  reduce((v, acc={}) -> acc ++ {
+          "employees" : {
+              "employee" : {
+                  "id" : v.id,
+                  "name" : v.name,
+                  "dept" : v.dept
+              }
+          }   
+  })
