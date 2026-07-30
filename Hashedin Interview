@@ -1,0 +1,227 @@
+	1. Vibes 
+	2. CIDR
+	3. Agentic AI
+	4. MCP
+	5. Private space and VPC difference
+	6. Asserts in Munit , types?
+	7. Domain project in mulesoft?
+	8. Data masking
+	9. Salesforce Connector   V2 , composite etc?
+	10. If we are saving data through sftp as a file name and some of the data got missed ..what issue and why this happened?
+	11. Outh and outh 2.0 difference?
+	12. SSL/TLS?
+	13. TTL and expiration time?
+	14. How to prevent duplicate records processign and idempotent msg?
+	15. When we get the error and caught in on error continue and it again got failed what should happen to response?
+	16. If there is disatser what startegy can we apply so that our api never goes down? - 
+	- Two workers , multi-regions, Queue based architecture(data stays in queue), retry mechanism + circuit breaker pattern, multiple replicas(pods) 
+	17. How to secure sensitive data ? - https witth  TLS , secure properties, data masking, encryption, apply outh/JWT
+
+
+
+https://deloitte.zoom.us/j/95050636381?pwd=NYax2HiuChikFBSoMvFDXubir2FEY6.1
+
+Join from Zoom Workplace app - Zoom
+
+Dataweave - 
+
+	1. Input - 
+	[{
+	
+	"ID": "A",
+	
+	"name": "123",
+	
+	"bossID": "C"
+	
+	},
+	
+	{
+	
+	"ID": "B",
+	
+	"name": "345",
+	
+	"bossID": "D"
+	
+	},
+	
+	{
+	
+	"ID": "C",
+	
+	"name": "456",
+	
+	"bossID": "B"
+	
+	},
+	
+	{
+	
+	"ID": "D",
+	
+	"name": "789",
+	
+	"bossID": "C"
+	
+	}]
+
+Output - 
+[{
+
+"EmpName": "123",
+
+"BossName": "456"
+
+},
+
+{
+
+"EmpName": "345",
+
+"BossName": "789"
+
+},
+
+{
+
+"EmpName": "456",
+
+"BossName": "345"
+
+},
+
+{
+
+"EmpName": "789",
+
+"BossName": "456"
+
+}]
+
+Dwl - 
+
+%dw 2.0
+output application/json
+---
+payload map (emp) ->
+{
+    "EmpName" : emp.name,
+    "BossName" : (payload filter($.ID == emp.bossID)).name[0]
+}
+
+	2. Input : Hello MuleSoft
+	
+	Output : MuleSoft Hello
+
+Dwl - 
+
+%dw 2.0
+output application/json
+var inputs = "Hello Mulesoft"
+---
+((inputs splitBy  " ")[1]) ++ " " ++ (inputs splitBy  " ")[0]
+
+	3. Input : 
+	
+	[1 , "A" , "P" , 2 , 3 ]
+
+         Output : 
+
+	{"num": [1,2,3,4,5], "letters": ["A", "P"]}
+
+DWL-
+
+
+%dw 2.0
+output application/json
+---
+{
+    "number" : payload filter($ is Number),
+    "letters" : payload filter ($ is String)
+}
+
+
+
+
+
+
+
+
+
+
+	4. Input: 
+	
+	{
+	  "number": [
+	    1,
+	    2,
+	    3
+	  ],
+	  "letters": [
+	    "A",
+	    "P"
+	  ]
+	}
+	
+
+Output:
+{
+  "Keys": [
+    "number",
+    "letters"
+  ],
+  "values": [
+    1,
+    2,
+    3,
+    "A",
+    "P"
+  ]
+}
+
+
+DWL :
+
+
+%dw 2.0
+output application/json
+---
+{
+"Keys" : keysOf(payload),
+"values" : flatten(valuesOf(payload))
+}
+
+
+design round - 
+Problem understanding - 
+Solutions
+
+ mulesoft apis
+Integration solutions -  design solutions
+Integration designs
+ 
+Anypoint studio connector , transformer
+Dataweave  - solve 
+Mulesoft 
+Automation CI CD pipelines
+
+2nd round
+Project design .. Architecture 
+infra - different tvpes.. cloud hosted -
+One onprem one cloud blue zone  ..deployed
+
+Outh infra strong
+
+System design - draw.io 
+raml
+
+3rd round
+Past expereince - lead or not
+Mule questions
+Backend tools - java or python
+Agile methodolgy
+Stablitiy in long term 
+Role nwill be checked
+Cognitive ability - make able to understood
+How fit would be agile methodolgy , team player
