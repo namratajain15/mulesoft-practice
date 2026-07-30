@@ -1,0 +1,229 @@
+• How do you handle API security in Anypoint Platform?
+• Describe your experience with CI/CD for MuleSoft application deployment.
+• How do you implement an idempotent message filter to prevent duplicate records?
+How would you design an enterprise integration using API-led connectivity?
+2️⃣ How do you design a MuleSoft application to handle high traffic and ensure scalability?
+3️⃣ What strategies do you use to process large payloads efficiently in MuleSoft?
+4️⃣ How do you implement centralized error handling in MuleSoft applications?
+5️⃣ How do you secure APIs in MuleSoft for enterprise-level integrations?
+6️⃣ How do you monitor and troubleshoot MuleSoft applications in production?
+7️⃣ What approaches do you follow to optimize the performance of a MuleSoft application?
+8️⃣ How do you manage configuration and environment properties across dev, QA, and production?
+9️⃣ How do you implement retry mechanisms and handle transient failures in MuleSoft?
+🔟 What CI/CD strategies and tools have you used for MuleSoft application deployments?
+
+API PRoxy
+
+-----------------------------------------------------
+
+Security
+	• OAuth 2.0
+	• Client-ID enforcement
+	• TLS
+
+✅ Q: How do you implement CI/CD for MuleSoft?
+
+
+
+
+-> dataweave practice from playgorund, whatsapp deepk notes pdf, EY interviews video on YT, scenario based questions , introduction and project prepare - resume read
+
+
+API lifecycle 
+Mulesoft 
+Components 
+Connectors in details -
+Salesforce 
+Http 
+Db 
+
+Error Handling 
+1 way 2 way SSL certificate
+
+Asynchronous and synchronous
+
+Looping -
+Switchcase
+Foreach parallel scatter gather 
+Batch processing -
+Vm queues , jms queues 
+scheduler
+DB Transaction handling 
+
+Pagination
+Db pooling 
+Connection pooling
+Objectstore k questions- caching and tokenization
+Alerts  - pending - API manager
+Auth 
+Caching 
+Contratcs 
+Policies
+
+Migration - 
+4.3 to 4.4 to 4.6 to 4.9 
+
+
+Anypoint platform - 
+Api manger
+Designcenter - Raml - import anypoint studion and complete 
+
+
+
+Policies how to create - 
+Circuit breaking
+
+Pagination
+Db pooling 
+Connection pooling
+Objectstore k questions- caching and tokenization
+Alerts
+Auth 
+Caching 
+Contratcs 
+Policies
+
+Migration - 
+4.3 to 4.4 to 4.6 to 4.9 
+
+Notes pending - 
+Until successful
+Status codes
+munits
+Anypoint flex gateway and api gateway
+Db insert/bulk insert
+Tokenization vs Masking vs Encryption
+Throttling and rate limiting
+Vpc peering
+API AutoDiscovery - youtube video saved
+
+How to configure timeouts in Circuit Breaker?
+
+
+
+
+
+Intro
+Revision notes
+Scenario
+dataweave
+
+Deploying via portal
+Request raise, jenkins job , not exposed to us, deploy to us
+
+Restrict which consumer will use our API? - 
+Autodiscovery in main file …we give instance id by that 
+
+
+
+
+RAML - how to use json and xml
+Traits - common reusable chunks
+Composites - define the data and traits diff
+
+
+
+Exchnge - 
+Outh where to put in RAML 
+API manager - outh configur how and where?
+Policy contract addition?
+
+Dataweave - 
+Max
+
+
+Subflow
+
+-> Error handling - questions - different scenarios based
+              -> First come first serve - always blindly follow
+
+
+ -> Synchronous Asynchronous 
+
+- Larger payload to send 
+->  Streaming - 
+3 types  -
+	1. Non repeatable  -   one time consumable only ..one service send then not sned to second service
+	2. Repeatable memory stream - small streams that buffer in memory
+	3. Repeatable file storage stream - like scatter gather, not saving the streams, live stream , use the server capability
+
+
+-> Pagination -
+
+	- Making data into pages into readable format ..dyanmically reading the data..based on business logic
+	- Limit - how many records per page  and offset -  where to start
+	
+	- Watermarking - add extra column .. Kind of tick mark that yaha tk data consumed
+	- Offset Pagination - add offset column to tell, consumed till this offset value, reading a book
+	- Cursor based pagination - continous numers data from to till make the dates
+
+Insurance and false claims detection k liye use kiya hai
+
+-> Batch Processing -
+
+	- Failed records ko segregate aggregate , offset = -1 krne s sb consume krleta h
+	
+-> For Each and paralle For Each and batch processing
+
+	- For each - synchronous
+	- parallel for each - asynchronous, not first 50 records ..like phle kuch bich k 50 record sthen shuru k kuch ..not sequential
+	- Batch processing - use for error handling, 
+
+-> Choice Router , Scatter Gather , Asuccessful Router, Round Robin Connector
+
+-> Dataweave 
+
+Munit  -- 3 states validation execution 
+Dataweave - basic to advanced
+
+Sangeetha - Contracts , policies , security , munit, logging , error handling
+
+
+	1. Mulesoft?
+	2. Mule ESB?
+	3. Types of Variables with one example?
+	4. Types of exception handling ?
+	5. What is shared resources in Mule?
+	6. What is webServices?
+	7. How to find which project needs ESB? 
+	8. How to create and consume soap service in mule?
+	9. Mulesoft Anypoint Platform?
+	10. Transient Context?
+	11. What is API?
+	12. What is REST?
+	13. What is RAML?
+	14. What is payload?
+	15. How the messages in Mule are composed? / Architecture?
+	16. Mule Data Integrator?
+	17. Mulesoft architecture in detail? - inbound and outbound properties(headers)
+	18. Different types of error , figure out?
+
+Types of variables?
+
+Dataweave cheat sheet -
+	1. If [ -> { , use reduce mostly
+	2. If { -> [  or  extra [  remove, use pluck
+	3. Whenever [ {  :  } ] , key value pair inside [{ then use map and mapObject as well to access key-value pair
+
+
+
+Deepak pdf
+New questions solution find by deilotte
+HR topics related questions on designs 
+And some RAML practice 
+Setup platform and studio once
+
+Dataweave - practice
+
+Old revise fast - from notebook and copilot
+And old scenario questions in copilot
+
+
+
+
+
+
+
+Dataweave practice
+Scenario based questions - gpt and pilot and you tube video
+BBA projct read on confluence 
